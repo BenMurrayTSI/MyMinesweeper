@@ -94,7 +94,77 @@ public class Main {
             }
             System.out.println();
         }
+        System.out.println();
 
+
+
+        //ADD VALUES
+        for (int k = 0; k < height; k++) {
+            for (int l = 0; l < width; l++) {
+
+                int tileRow = k;
+                int tileColumn = l;
+                String tileValue = gameBoard[tileRow][tileColumn];
+                int setTileValue = 0;
+
+                if (tileValue == "X") {
+
+                } else {
+                    for (int i = tileRow - 1; i <= tileRow + 1; i++) {
+                        for (int j = tileColumn - 1; j <= tileColumn + 1; j++) {
+                            try {
+                                if (gameBoard[i][j] == "X") {
+                                    setTileValue++;
+                                    gameBoard[tileRow][tileColumn] = Integer.toString(setTileValue);
+                                }
+                            } catch (ArrayIndexOutOfBoundsException e) {
+                                continue;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+        //PRINT BOARD
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                System.out.printf("  " + gameBoard[i][j]);
+            }
+            System.out.println();
+        }
+
+
+
+//        //ADD VALUES
+//
+//        int tileRow = 0;
+//        int tileColumn = 0;
+//
+//        String tileValue = gameBoard[tileRow][tileColumn];
+//        int setTileValue = 0;
+//        String newTileValue;
+//
+//        if (tileValue == "X") {
+//            newTileValue = "X";
+//
+//        } else {
+//            for (int i = tileRow - 1; i <= tileRow + 1; i++) {
+//                for (int j = tileColumn - 1; j <= tileColumn + 1; j++) {
+//                    try {
+//                        if (gameBoard[i][j] == "X") {
+//                            setTileValue++;
+//                        }
+//                    } catch (ArrayIndexOutOfBoundsException e) {
+//                        continue;
+//                    }
+//                }
+//            }
+//            newTileValue = Integer.toString(setTileValue);
+//        }
+//        System.out.println(newTileValue);
 
 
     }
