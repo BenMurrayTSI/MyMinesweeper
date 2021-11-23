@@ -7,45 +7,49 @@ public class Board {
     private int height;
     private int width;
     private int mineAmount;
-    private String[][] gameBoard;
+    private String[][] gameBackBoard;
+    private String[][] gameFrontBoard;
     private ArrayList mines;
     private int[][] minePositions;
+    String mineSymbol = ".";
+    boolean dead = false;
 
     public Board(int height, int width, int mineAmount) {
         this.height = height;
         this.width = width;
         this.mineAmount = mineAmount;
 
-        generate();
+        generateBackBoard();
     }
 
-    private void generate() {
-        generateBoard();
+    private void generateBackBoard() {
+        generateClearBackBoard();
+        //printBackBoard();
         generateMines();
         placeMines();
+        //printBackBoard();
         addValues();
-        printMinePositions();
+        //printMinePositions();
         printBackBoard();
     }
 
     //GENERATE BOARD
-    private void generateBoard() {
-        this.gameBoard = new String[height][width];
+    private void generateClearBackBoard() {
+        this.gameBackBoard = new String[height][width];
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                gameBoard[i][j] = "0";
+                gameBackBoard[i][j] = "0";
             }
         }
-        printBackBoard();
     }
 
 
 
     //PRINT BACK BOARD
-    private void printBackBoard() {
+    public void printBackBoard() {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                System.out.print("  " + gameBoard[i][j]);
+                System.out.print("  " + gameBackBoard[i][j]);
             }
             System.out.println();
         }
@@ -62,14 +66,14 @@ public class Board {
         for (int i = 0; i < height * width; i++) {
             numbers.add(i);
         }
-        System.out.println(numbers);
-        System.out.println();
+        //System.out.println(numbers);
+        //System.out.println();
         Collections.shuffle(numbers);
         for (int j = 0; j < mineAmount; j++) {
             mines.add(numbers.get(j));
         }
-        System.out.println(mines);
-        System.out.println();
+        //System.out.println(mines);
+        //System.out.println();
     }
 
 
@@ -87,15 +91,14 @@ public class Board {
             minePositions[0][i] = mineRow;
             minePositions[1][i] = mineColumn;
 
-            gameBoard[mineRow][mineColumn] = "X";
+            gameBackBoard[mineRow][mineColumn] = mineSymbol;
         }
-        printBackBoard();
     }
 
 
 
     //PRINT MINE POSITIONS
-    private void printMinePositions() {
+    public void printMinePositions() {
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < mineAmount; j++) {
                 System.out.printf("  " + minePositions[i][j]);
@@ -113,18 +116,18 @@ public class Board {
 
                 int tileRow = k;
                 int tileColumn = l;
-                String tileValue = gameBoard[tileRow][tileColumn];
+                String tileValue = gameBackBoard[tileRow][tileColumn];
                 int setTileValue = 0;
 
-                if (tileValue == "X") {
+                if (tileValue == mineSymbol) {
 
                 } else {
                     for (int i = tileRow - 1; i <= tileRow + 1; i++) {
                         for (int j = tileColumn - 1; j <= tileColumn + 1; j++) {
                             try {
-                                if (gameBoard[i][j] == "X") {
+                                if (gameBackBoard[i][j] == mineSymbol) {
                                     setTileValue++;
-                                    gameBoard[tileRow][tileColumn] = Integer.toString(setTileValue);
+                                    gameBackBoard[tileRow][tileColumn] = Integer.toString(setTileValue);
                                 }
                             } catch (ArrayIndexOutOfBoundsException e) {
                                 continue;
@@ -134,5 +137,47 @@ public class Board {
                 }
             }
         }
+    }
+
+
+
+    //
+    public void generateFrontBoard() {
+        generateClearFrontBoard();
+    }
+
+    private void generateClearFrontBoard() {
+        this.gameFrontBoard = new String[height][width];
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                gameFrontBoard[i][j] = "-";
+            }
+        }
+    }
+
+    public void printFrontBoard() {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                System.out.print("  " + gameFrontBoard[i][j]);
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
+
+    public void evaluateTile(int selectedRow, int selectedColumn) {
+        if (gameBackBoard[selectedRow][selectedColumn] == mineSymbol) {
+            this.dead = true;
+        } else {
+            gameFrontBoard[selectedRow][selectedColumn] = gameBackBoard[selectedRow][selectedColumn];
+        }
+    }
+
+    public boolean isDead() {
+        if (dead == true) {
+            return true;
+        }
+        return false;
     }
 }
