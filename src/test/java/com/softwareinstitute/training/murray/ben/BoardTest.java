@@ -12,4 +12,5 @@ public class BoardTest {
     public void testBoard() {
         assertEquals("The player should not start dead.", false, gameBoard.isDead());
     }
+    
 }
