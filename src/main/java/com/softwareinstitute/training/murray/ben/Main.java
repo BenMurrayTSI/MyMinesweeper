@@ -41,6 +41,12 @@ public class Main {
                 System.out.println("You Died!");
                 i=0;
             }
+
+            if (gameBoard.isDone()) {
+                gameBoard.printBackBoard();
+                System.out.println("You Won!");
+                i=0;
+            }
         }
     }
 }
