@@ -206,8 +206,6 @@ public class Board {
             gameFrontBoard[selectedRow][selectedColumn] = gameBackBoard[selectedRow][selectedColumn];
             String[][] oldGameFrontBoard = new String[height][width];
 
-            printFrontBoard();
-
             while (!Arrays.deepEquals(oldGameFrontBoard, gameFrontBoard)) {
 
 
@@ -243,7 +241,7 @@ public class Board {
             gameFrontBoard[selectedRow][selectedColumn] = gameBackBoard[selectedRow][selectedColumn];
         }
 
-        if (Arrays.deepEquals(gameBackBoard, gameDoneBoard)) {
+        if (Arrays.deepEquals(gameFrontBoard, gameDoneBoard)) {
             this.done = true;
         }
 
