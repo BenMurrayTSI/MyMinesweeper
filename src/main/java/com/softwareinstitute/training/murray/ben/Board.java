@@ -19,6 +19,7 @@ public class Board {
     boolean dead = false;
     boolean done = false;
 
+
     public Board(int height, int width, int mineAmount) {
         this.height = height;
         this.width = width;
@@ -31,6 +32,7 @@ public class Board {
     //GENERATE DONE BOARD
     private void generateDoneBoard() {
         this.gameDoneBoard = new String[height][width];
+
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 gameDoneBoard[i][j] = gameBackBoard[i][j];
@@ -73,6 +75,7 @@ public class Board {
     //GENERATE CLEAR BACK BOARD
     private void generateClearBackBoard() {
         this.gameBackBoard = new String[height][width];
+
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 gameBackBoard[i][j] = clearSymbol;
@@ -101,14 +104,11 @@ public class Board {
         for (int i = 0; i < height * width; i++) {
             numbers.add(i);
         }
-        //System.out.println(numbers);
-        //System.out.println();
+
         Collections.shuffle(numbers);
         for (int j = 0; j < mineAmount; j++) {
             mines.add(numbers.get(j));
         }
-        //System.out.println(mines);
-        //System.out.println();
     }
 
 
@@ -146,7 +146,6 @@ public class Board {
     private void addInitialValues() {
         for (int tileRow = 0; tileRow < height; tileRow++) {
             for (int tileColumn = 0; tileColumn < width; tileColumn++) {
-
                 String tileValue = gameBackBoard[tileRow][tileColumn];
                 int setTileValue = 0;
 
@@ -177,6 +176,7 @@ public class Board {
     //GENERATE CLEAR FRONT BOARD
     private void generateClearFrontBoard() {
         this.gameFrontBoard = new String[height][width];
+
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 gameFrontBoard[i][j] = hiddenSymbol;
@@ -202,25 +202,18 @@ public class Board {
         if (gameBackBoard[selectedRow][selectedColumn].equals(mineSymbol)) {
             this.dead = true;
         } else if (gameBackBoard[selectedRow][selectedColumn].equals(clearSymbol)) {
-
             gameFrontBoard[selectedRow][selectedColumn] = gameBackBoard[selectedRow][selectedColumn];
             String[][] oldGameFrontBoard = new String[height][width];
 
             while (!Arrays.deepEquals(oldGameFrontBoard, gameFrontBoard)) {
-
-
                 for (int i = 0; i < height; i++) {
                     for (int j = 0; j < width; j++) {
                         oldGameFrontBoard[i][j] = gameFrontBoard[i][j];
                     }
                 }
 
-
-
-
                 for (int tileRow = 0; tileRow < height; tileRow++) {
                     for (int tileColumn = 0; tileColumn < width; tileColumn++) {
-
                         String frontTileValue = gameFrontBoard[tileRow][tileColumn];
 
                         if (frontTileValue.equals(clearSymbol)) {
@@ -228,7 +221,6 @@ public class Board {
                                 for (int j = tileColumn - 1; j <= tileColumn + 1; j++) {
                                     try {
                                         gameFrontBoard[i][j] = gameBackBoard[i][j];
-
                                     } catch (ArrayIndexOutOfBoundsException ignored) {
                                     }
                                 }
@@ -240,11 +232,9 @@ public class Board {
         } else {
             gameFrontBoard[selectedRow][selectedColumn] = gameBackBoard[selectedRow][selectedColumn];
         }
-
         if (Arrays.deepEquals(gameFrontBoard, gameDoneBoard)) {
             this.done = true;
         }
-
     }
 
 
@@ -253,6 +243,8 @@ public class Board {
         return dead;
     }
 
+
+    //RETURN IF DONE
     public boolean isDone() {
         return done;
     }

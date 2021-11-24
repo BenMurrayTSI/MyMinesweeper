@@ -1,7 +1,5 @@
 package com.softwareinstitute.training.murray.ben;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Scanner;
 
 public class Main {
@@ -20,12 +18,12 @@ public class Main {
         int mineAmount = scan.nextInt();
         System.out.println();
 
+
         Board gameBoard = new Board(height, width, mineAmount);
         gameBoard.generateFrontBoard();
 
         int i = 1;
         while (i == 1) {
-
             gameBoard.printFrontBoard();
 
             System.out.print("Row: ");
