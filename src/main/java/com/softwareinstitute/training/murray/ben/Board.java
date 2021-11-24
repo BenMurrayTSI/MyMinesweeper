@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Board {
-    private int height;
-    private int width;
-    private int mineAmount;
+    private final int height;
+    private final int width;
+    private final int mineAmount;
     private String[][] gameBackBoard;
     private String[][] gameFrontBoard;
-    private ArrayList mines;
+    private ArrayList<Integer> mines;
     private int[][] minePositions;
     String mineSymbol = ".";
     boolean dead = false;
@@ -60,8 +60,8 @@ public class Board {
 
     //GENERATE MINES
     private void generateMines() {
-        ArrayList numbers = new ArrayList();
-        this.mines = new ArrayList();
+        ArrayList<Integer> numbers = new ArrayList<>();
+        this.mines = new ArrayList<>();
 
         for (int i = 0; i < height * width; i++) {
             numbers.add(i);
@@ -83,10 +83,10 @@ public class Board {
         this.minePositions = new int[2][mineAmount];
 
         for (int i = 0; i < mineAmount; i++) {
-            double mine = (double) mines.get(i);
+            int mine = (int) mines.get(i);
 
             int mineRow = (int) Math.floor(mine / width);
-            int mineColumn = (int) (mine % width);
+            int mineColumn = mine % width;
 
             minePositions[0][i] = mineRow;
             minePositions[1][i] = mineColumn;
@@ -101,7 +101,7 @@ public class Board {
     public void printMinePositions() {
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < mineAmount; j++) {
-                System.out.printf("  " + minePositions[i][j]);
+                System.out.print("  " + minePositions[i][j]);
             }
             System.out.println();
         }
@@ -111,17 +111,13 @@ public class Board {
 
     //ADD VALUES
     private void addValues() {
-        for (int k = 0; k < height; k++) {
-            for (int l = 0; l < width; l++) {
+        for (int tileRow = 0; tileRow < height; tileRow++) {
+            for (int tileColumn = 0; tileColumn < width; tileColumn++) {
 
-                int tileRow = k;
-                int tileColumn = l;
                 String tileValue = gameBackBoard[tileRow][tileColumn];
                 int setTileValue = 0;
 
-                if (tileValue.equals(mineSymbol)) {
-
-                } else {
+                if (!tileValue.equals(mineSymbol)) {
                     for (int i = tileRow - 1; i <= tileRow + 1; i++) {
                         for (int j = tileColumn - 1; j <= tileColumn + 1; j++) {
                             try {
@@ -129,8 +125,7 @@ public class Board {
                                     setTileValue++;
                                     gameBackBoard[tileRow][tileColumn] = Integer.toString(setTileValue);
                                 }
-                            } catch (ArrayIndexOutOfBoundsException e) {
-                                continue;
+                            } catch (ArrayIndexOutOfBoundsException ignored) {
                             }
                         }
                     }
@@ -175,9 +170,6 @@ public class Board {
     }
 
     public boolean isDead() {
-        if (dead == true) {
-            return true;
-        }
-        return false;
+        return dead;
     }
 }
