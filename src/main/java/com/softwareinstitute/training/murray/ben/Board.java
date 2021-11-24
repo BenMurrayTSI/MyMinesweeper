@@ -83,10 +83,10 @@ public class Board {
         this.minePositions = new int[2][mineAmount];
 
         for (int i = 0; i < mineAmount; i++) {
-            int mine = (int) mines.get(i);
+            double mine = (double) mines.get(i);
 
             int mineRow = (int) Math.floor(mine / width);
-            int mineColumn = mine % width;
+            int mineColumn = (int) (mine % width);
 
             minePositions[0][i] = mineRow;
             minePositions[1][i] = mineColumn;
@@ -119,13 +119,13 @@ public class Board {
                 String tileValue = gameBackBoard[tileRow][tileColumn];
                 int setTileValue = 0;
 
-                if (tileValue == mineSymbol) {
+                if (tileValue.equals(mineSymbol)) {
 
                 } else {
                     for (int i = tileRow - 1; i <= tileRow + 1; i++) {
                         for (int j = tileColumn - 1; j <= tileColumn + 1; j++) {
                             try {
-                                if (gameBackBoard[i][j] == mineSymbol) {
+                                if (gameBackBoard[i][j].equals(mineSymbol)) {
                                     setTileValue++;
                                     gameBackBoard[tileRow][tileColumn] = Integer.toString(setTileValue);
                                 }
@@ -167,7 +167,7 @@ public class Board {
 
 
     public void evaluateTile(int selectedRow, int selectedColumn) {
-        if (gameBackBoard[selectedRow][selectedColumn] == mineSymbol) {
+        if (gameBackBoard[selectedRow][selectedColumn].equals(mineSymbol)) {
             this.dead = true;
         } else {
             gameFrontBoard[selectedRow][selectedColumn] = gameBackBoard[selectedRow][selectedColumn];
