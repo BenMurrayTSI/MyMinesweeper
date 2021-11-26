@@ -18,17 +18,20 @@ public class Board {
 
     //SYMBOLS
     String mineSymbol = BRIGHT_WHITE + BLACK_BACKGROUND + " X " + RESET;
-    String hiddenSymbol = BLACK_BACKGROUND_BRIGHT + " ? " + RESET;
     String clearSymbol = BLACK_BACKGROUND + " - " + RESET;
-    String flagSymbol = BLACK_BACKGROUND_BRIGHT + BRIGHT_YELLOW + " F " + RESET;
     String oneSymbol = BRIGHT_CYAN + BLACK_BACKGROUND + " 1 " + RESET;
     String twoSymbol = GREEN + BLACK_BACKGROUND + " 2 " + RESET;
     String threeSymbol = RED + BLACK_BACKGROUND + " 3 " + RESET;
     String fourSymbol = BRIGHT_BLUE + BLACK_BACKGROUND + " 4 " + RESET;
     String fiveSymbol = BRIGHT_PURPLE + BLACK_BACKGROUND + " 5 " + RESET;
     String sixSymbol = CYAN + BLACK_BACKGROUND + " 6 " + RESET;
-    String sevenSymbol = YELLOW + BLACK_BACKGROUND + " 7 " + RESET;
+    String sevenSymbol = BRIGHT_YELLOW + BLACK_BACKGROUND + " 7 " + RESET;
     String eightSymbol = BRIGHT_GREEN + BLACK_BACKGROUND + " 8 " + RESET;
+    String hiddenSymbol = BOLD + BLACK_BACKGROUND_BRIGHT + " ? " + RESET;
+    String flagSymbol1 = RED_UNDERLINED + "F" + RESET;
+    String flagSymbol2 = BLACK_BACKGROUND_BRIGHT  + flagSymbol1 + RESET;
+    String flagSymbolSide = BLACK_BACKGROUND_BRIGHT  + " " + RESET;
+    String flagSymbol = flagSymbolSide + flagSymbol2 + flagSymbolSide;
 
 
     //COLOURS
@@ -53,6 +56,9 @@ public class Board {
     public static final String WHITE_BACKGROUND = "\033[47m";
     public static final String BLACK_BACKGROUND_BRIGHT = "\033[100m";
     public static final String BLACK_BACKGROUND = "\033[40m";
+    public static final String BLACK_UNDERLINED = "\033[4;30m";
+    public static final String RED_UNDERLINED = "\033[4;31m";
+    public static final String BOLD = "\033[0;1m";
 
 
     public Board(int height, int width, int mineAmount) {
@@ -127,7 +133,6 @@ public class Board {
             System.out.println();
 
             if (i == height - 1) {
-                System.out.print(" ");
                 for (int j = 0; j < width; j++) {
                     System.out.print("___");
                 }
@@ -141,7 +146,7 @@ public class Board {
                         if (value == 0 && zero) {
                             System.out.print("   ");
                         } else {
-                            System.out.print("  " + value);
+                            System.out.print(" " + value + " ");
                             zero = false;
                         }
 
@@ -200,7 +205,6 @@ public class Board {
             System.out.println();
 
             if (i == height - 1) {
-                System.out.print(" ");
                 for (int j = 0; j < width; j++) {
                     System.out.print("___");
                 }
@@ -214,7 +218,7 @@ public class Board {
                         if (value == 0 && zero) {
                             System.out.print("   ");
                         } else {
-                            System.out.print("  " + value);
+                            System.out.print(" " + value + " ");
                             zero = false;
                         }
 
@@ -302,7 +306,6 @@ public class Board {
             System.out.println();
 
             if (i == height - 1) {
-                System.out.print(" ");
                 for (int j = 0; j < width; j++) {
                     System.out.print("___");
                 }
@@ -316,7 +319,7 @@ public class Board {
                         if (value == 0 && zero) {
                             System.out.print("   ");
                         } else {
-                            System.out.print("  " + value);
+                            System.out.print(" " + value + " ");
                             zero = false;
                         }
 
