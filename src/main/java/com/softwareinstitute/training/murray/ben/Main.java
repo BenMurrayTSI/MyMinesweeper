@@ -7,6 +7,10 @@ public class Main {
 
     public static void main(String[] args) {
 
+        int k = 1;
+        int j = 1;
+        int i = 1;
+
         //INPUTS
         Scanner scan = new Scanner(System.in);
         System.out.print("Height: ");
@@ -20,10 +24,75 @@ public class Main {
         System.out.println();
 
 
+
         Board gameBoard = new Board(height, width, mineAmount);
         gameBoard.generateFrontBoard();
 
-        int i = 1;
+        if (height*width == mineAmount) {
+            while (k == 1) {
+                gameBoard.printFrontBoard();
+
+                System.out.print("Row: ");
+                int nullRow = scan.nextInt()-1;
+
+                System.out.print("Column: ");
+                int nullColumn = scan.nextInt()-1;
+
+                gameBoard.generateFullBackBoard(height, width);
+
+
+
+                gameBoard.printBackBoard();
+                System.out.println("You Died!");
+                j = 0;
+                i = 0;
+                k = 0;
+
+            }
+
+
+        }
+
+
+
+
+
+
+        while (j == 1) {
+            gameBoard.printFrontBoard();
+
+            System.out.print("Row: ");
+            int initialRow = scan.nextInt()-1;
+
+            System.out.print("Column: ");
+            int initialColumn = scan.nextInt()-1;
+
+
+
+
+            gameBoard.isBoardAllowed(initialRow, initialColumn);
+
+            gameBoard.generateDoneBoard();
+            gameBoard.generateBackBoard();
+            gameBoard.printBackBoard();
+
+            gameBoard.evaluateTile(initialRow, initialColumn);
+            j = 0;
+
+
+
+            if (gameBoard.isDone()) {
+                gameBoard.printBackBoard();
+                System.out.println("You Won!");
+                j = 0;
+                i = 0;
+            }
+        }
+
+
+
+
+
         while (i == 1) {
             gameBoard.printFrontBoard();
 
@@ -48,13 +117,13 @@ public class Main {
             if (gameBoard.isDead()) {
                 gameBoard.printBackBoard();
                 System.out.println("You Died!");
-                i=0;
+                i = 0;
             }
 
             if (gameBoard.isDone()) {
                 gameBoard.printBackBoard();
                 System.out.println("You Won!");
-                i=0;
+                i = 0;
             }
         }
     }

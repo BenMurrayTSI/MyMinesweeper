@@ -66,12 +66,12 @@ public class Board {
         this.width = width;
         this.mineAmount = mineAmount;
 
-        generateBackBoard();
+
     }
 
 
     //GENERATE DONE BOARD
-    private void generateDoneBoard() {
+    public void generateDoneBoard() {
         this.gameDoneBoard = new String[height][width];
 
         for (int i = 0; i < height; i++) {
@@ -99,15 +99,14 @@ public class Board {
 
 
     //GENERATE BACK BOARD
-    private void generateBackBoard() {
+    public void generateBackBoard() {
         generateClearBackBoard();
         //printBackBoard();
-        generateMines();
         placeBackBoardMines();
         //printBackBoard();
         addInitialValues();
         //printMinePositions();
-        printBackBoard();
+        //printBackBoard();
     }
 
 
@@ -173,6 +172,31 @@ public class Board {
         Collections.shuffle(numbers);
         for (int j = 0; j < mineAmount; j++) {
             mines.add(numbers.get(j));
+        }
+    }
+
+
+    //CHECK IS BOARD ALLOWED
+    public void isBoardAllowed(int initialRow, int initialColumn) {
+        boolean allowed = false;
+
+        while (!allowed){
+            generateMines();
+            this.minePositions = new int[2][mineAmount];
+            allowed = true;
+            for (int i = 0; i < mineAmount; i++) {
+                int mine = (int) mines.get(i);
+
+                int mineRow = (int) Math.floor(mine / width);
+                int mineColumn = mine % width;
+
+                minePositions[0][i] = mineRow;
+                minePositions[1][i] = mineColumn;
+
+                if (mineRow == initialRow && mineColumn == initialColumn) {
+                    allowed = false;
+                }
+            }
         }
     }
 
@@ -255,17 +279,18 @@ public class Board {
 
                     String colouredSetTileValue = Integer.toString(setTileValue);
 
-                    switch (setTileValue) {
-                        case 0 -> colouredSetTileValue = clearSymbol;
-                        case 1 -> colouredSetTileValue = oneSymbol;
-                        case 2 -> colouredSetTileValue = twoSymbol;
-                        case 3 -> colouredSetTileValue = threeSymbol;
-                        case 4 -> colouredSetTileValue = fourSymbol;
-                        case 5 -> colouredSetTileValue = fiveSymbol;
-                        case 6 -> colouredSetTileValue = sixSymbol;
-                        case 7 -> colouredSetTileValue = sevenSymbol;
-                        case 8 -> colouredSetTileValue = eightSymbol;
-                    }
+                    colouredSetTileValue = switch (setTileValue) {
+                        case 0 -> clearSymbol;
+                        case 1 -> oneSymbol;
+                        case 2 -> twoSymbol;
+                        case 3 -> threeSymbol;
+                        case 4 -> fourSymbol;
+                        case 5 -> fiveSymbol;
+                        case 6 -> sixSymbol;
+                        case 7 -> sevenSymbol;
+                        case 8 -> eightSymbol;
+                        default -> "e";
+                    };
 
 
 
@@ -279,7 +304,6 @@ public class Board {
     //GENERATE FRONT BOARD
     public void generateFrontBoard() {
         generateClearFrontBoard();
-        generateDoneBoard();
         //printDoneBoard();
     }
 
@@ -291,6 +315,18 @@ public class Board {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 gameFrontBoard[i][j] = hiddenSymbol;
+            }
+        }
+    }
+
+
+    //GENERATE FULL BACK BOARD
+    public void generateFullBackBoard(int height, int width) {
+        this.gameBackBoard = new String[height][width];
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                gameBackBoard[i][j] = mineSymbol;
             }
         }
     }
