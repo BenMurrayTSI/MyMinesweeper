@@ -14,8 +14,9 @@ public class Board {
     private ArrayList<Integer> mines;
     private int[][] minePositions;
     String mineSymbol = ".";
-    String hiddenSymbol = "-";
-    String clearSymbol = "0";
+    String hiddenSymbol = "?";
+    String clearSymbol = "-";
+    String flagSymbol = "F";
     boolean dead = false;
     boolean done = false;
 
@@ -90,7 +91,34 @@ public class Board {
             for (int j = 0; j < width; j++) {
                 System.out.print("  " + gameBackBoard[i][j]);
             }
+            System.out.print("  |" + (i+1));
             System.out.println();
+
+            if (i == height - 1) {
+                System.out.print(" ");
+                for (int j = 0; j < width; j++) {
+                    System.out.print("___");
+                }
+                System.out.println();
+
+                int widthPrintRows = String.valueOf(width).length();
+                for (int k = 0; k < widthPrintRows; k++) {
+                    boolean zero = true;
+                    for (int j = 0; j < width; j++) {
+                        int value = (int) (Math.floor((j + 1)/(Math.pow(10,(widthPrintRows-k-1)))) % 10);
+                        if (value == 0 && zero) {
+                            System.out.print("   ");
+                        } else {
+                            System.out.print("  " + value);
+                            zero = false;
+                        }
+
+                    }
+                    System.out.println();
+                }
+
+
+            }
         }
         System.out.println();
     }
@@ -136,7 +164,34 @@ public class Board {
             for (int j = 0; j < mineAmount; j++) {
                 System.out.print("  " + minePositions[i][j]);
             }
+            System.out.print("  |" + (i+1));
             System.out.println();
+
+            if (i == height - 1) {
+                System.out.print(" ");
+                for (int j = 0; j < width; j++) {
+                    System.out.print("___");
+                }
+                System.out.println();
+
+                int widthPrintRows = String.valueOf(width).length();
+                for (int k = 0; k < widthPrintRows; k++) {
+                    boolean zero = true;
+                    for (int j = 0; j < width; j++) {
+                        int value = (int) (Math.floor((j + 1)/(Math.pow(10,(widthPrintRows-k-1)))) % 10);
+                        if (value == 0 && zero) {
+                            System.out.print("   ");
+                        } else {
+                            System.out.print("  " + value);
+                            zero = false;
+                        }
+
+                    }
+                    System.out.println();
+                }
+
+
+            }
         }
         System.out.println();
     }
@@ -191,7 +246,34 @@ public class Board {
             for (int j = 0; j < width; j++) {
                 System.out.print("  " + gameFrontBoard[i][j]);
             }
+            System.out.print("  |" + (i+1));
             System.out.println();
+
+            if (i == height - 1) {
+                System.out.print(" ");
+                for (int j = 0; j < width; j++) {
+                    System.out.print("___");
+                }
+                System.out.println();
+
+                int widthPrintRows = String.valueOf(width).length();
+                for (int k = 0; k < widthPrintRows; k++) {
+                    boolean zero = true;
+                    for (int j = 0; j < width; j++) {
+                        int value = (int) (Math.floor((j + 1)/(Math.pow(10,(widthPrintRows-k-1)))) % 10);
+                        if (value == 0 && zero) {
+                            System.out.print("   ");
+                        } else {
+                            System.out.print("  " + value);
+                            zero = false;
+                        }
+
+                    }
+                    System.out.println();
+                }
+
+
+            }
         }
         System.out.println();
     }
