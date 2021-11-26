@@ -1,5 +1,6 @@
 package com.softwareinstitute.training.murray.ben;
 
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
@@ -26,13 +27,23 @@ public class Main {
         while (i == 1) {
             gameBoard.printFrontBoard();
 
+            System.out.print("Choose (c) or Flag (f)? ");
+            String option = scan.next();
+
             System.out.print("Row: ");
             int selectedRow = scan.nextInt()-1;
 
             System.out.print("Column: ");
             int selectedColumn = scan.nextInt()-1;
 
-            gameBoard.evaluateTile(selectedRow, selectedColumn);
+            System.out.println();
+
+            if (option.equals("c")) {
+                gameBoard.evaluateTile(selectedRow, selectedColumn);
+            } else {
+                gameBoard.flagTile(selectedRow, selectedColumn);
+            }
+
 
             if (gameBoard.isDead()) {
                 gameBoard.printBackBoard();
