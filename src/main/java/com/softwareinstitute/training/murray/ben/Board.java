@@ -67,9 +67,7 @@ public class Board {
         this.gameDoneBoard = new String[height][width];
 
         for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                gameDoneBoard[i][j] = gameFrontBoard[i][j];
-            }
+            System.arraycopy(gameFrontBoard[i], 0, gameDoneBoard[i], 0, width);
         }
 
         for (int i = 0; i < mineAmount; i++) {
@@ -160,7 +158,7 @@ public class Board {
             for (int i = 0; i < mineAmount; i++) {
                 int mine = mines.get(i);
 
-                int mineRow = (int) Math.floor(mine / width);
+                int mineRow = (int) Math.floor((double)mine / width);
                 int mineColumn = mine % width;
 
                 minePositions[0][i] = mineRow;
@@ -181,7 +179,7 @@ public class Board {
         for (int i = 0; i < mineAmount; i++) {
             int mine = mines.get(i);
 
-            int mineRow = (int) Math.floor(mine / width);
+            int mineRow = (int) Math.floor((double)mine / width);
             int mineColumn = mine % width;
 
             minePositions[0][i] = mineRow;
@@ -313,9 +311,7 @@ public class Board {
 
                 while (!Arrays.deepEquals(oldGameFrontBoard, gameFrontBoard)) {
                     for (int i = 0; i < height; i++) {
-                        for (int j = 0; j < width; j++) {
-                            oldGameFrontBoard[i][j] = gameFrontBoard[i][j];
-                        }
+                        System.arraycopy(gameFrontBoard[i], 0, oldGameFrontBoard[i], 0, width);
                     }
 
                     for (int tileRow = 0; tileRow < height; tileRow++) {
