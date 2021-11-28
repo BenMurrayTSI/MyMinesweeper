@@ -1,6 +1,5 @@
 package com.softwareinstitute.training.murray.ben;
 
-import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
@@ -23,10 +22,10 @@ public class Main {
         int mineAmount = scan.nextInt();
         System.out.println();
 
-
-
         Board gameBoard = new Board(height, width, mineAmount);
         gameBoard.generateFrontBoard();
+
+
 
         if (height*width == mineAmount) {
             while (k == 1) {
@@ -40,21 +39,13 @@ public class Main {
 
                 gameBoard.generateFullBackBoard(height, width);
 
-
-
                 gameBoard.printBackBoard();
                 System.out.println("You Died!");
                 j = 0;
                 i = 0;
                 k = 0;
-
             }
-
-
         }
-
-
-
 
 
 
@@ -67,9 +58,6 @@ public class Main {
             System.out.print("Column: ");
             int initialColumn = scan.nextInt()-1;
 
-
-
-
             gameBoard.isBoardAllowed(initialRow, initialColumn);
 
             gameBoard.generateDoneBoard();
@@ -78,8 +66,6 @@ public class Main {
 
             gameBoard.evaluateTile(initialRow, initialColumn);
             j = 0;
-
-
 
             if (gameBoard.isDone()) {
                 gameBoard.printBackBoard();
@@ -91,12 +77,10 @@ public class Main {
 
 
 
-
-
         while (i == 1) {
             gameBoard.printFrontBoard();
 
-            System.out.print("Choose (c) or Flag (f)? ");
+            System.out.print("Reveal (r) or Flag (f)? ");
             String option = scan.next();
 
             System.out.print("Row: ");
@@ -107,12 +91,11 @@ public class Main {
 
             System.out.println();
 
-            if (option.equals("c")) {
+            if (option.equals("r")) {
                 gameBoard.evaluateTile(selectedRow, selectedColumn);
             } else {
                 gameBoard.flagTile(selectedRow, selectedColumn);
             }
-
 
             if (gameBoard.isDead()) {
                 gameBoard.printBackBoard();

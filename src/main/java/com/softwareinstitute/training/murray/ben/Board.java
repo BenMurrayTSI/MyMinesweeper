@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.Collections;
 
 public class Board {
+
+    //ATTRIBUTES
     private final int height;
     private final int width;
     private final int mineAmount;
@@ -16,8 +18,9 @@ public class Board {
     boolean dead = false;
     boolean done = false;
 
+
     //SYMBOLS
-    String mineSymbol = BRIGHT_WHITE + BLACK_BACKGROUND + " X " + RESET;
+    String mineSymbol = BRIGHT_WHITE + BLACK_BACKGROUND + "[X]" + RESET;
     String clearSymbol = BLACK_BACKGROUND + " - " + RESET;
     String oneSymbol = BRIGHT_CYAN + BLACK_BACKGROUND + " 1 " + RESET;
     String twoSymbol = GREEN + BLACK_BACKGROUND + " 2 " + RESET;
@@ -36,37 +39,26 @@ public class Board {
 
     //COLOURS
     public static final String RESET = "\u001B[0m";
-    public static final String BLACK = "\u001B[30m";
     public static final String RED = "\u001B[31m";
     public static final String GREEN = "\u001B[32m";
-    public static final String YELLOW = "\u001B[33m";
-    public static final String BLUE = "\u001B[34m";
-    public static final String PURPLE = "\u001B[35m";
     public static final String CYAN = "\u001B[36m";
-    public static final String WHITE = "\u001B[37m";
-    public static final String BRIGHT_BLACK = "\u001B[90m";
-    public static final String BRIGHT_RED = "\u001B[91m";
     public static final String BRIGHT_GREEN = "\u001B[92m";
     public static final String BRIGHT_YELLOW = "\u001B[93m";
     public static final String BRIGHT_BLUE = "\u001B[94m";
     public static final String BRIGHT_PURPLE = "\u001B[95m";
     public static final String BRIGHT_CYAN = "\u001B[96m";
     public static final String BRIGHT_WHITE = "\u001B[97m";
-    public static final String BLACK_BOLD = "\033[1;30m";
-    public static final String WHITE_BACKGROUND = "\033[47m";
     public static final String BLACK_BACKGROUND_BRIGHT = "\033[100m";
     public static final String BLACK_BACKGROUND = "\033[40m";
-    public static final String BLACK_UNDERLINED = "\033[4;30m";
     public static final String RED_UNDERLINED = "\033[4;31m";
     public static final String BOLD = "\033[0;1m";
 
 
+    //TAKE INITIAL INPUT
     public Board(int height, int width, int mineAmount) {
         this.height = height;
         this.width = width;
         this.mineAmount = mineAmount;
-
-
     }
 
 
@@ -86,27 +78,11 @@ public class Board {
     }
 
 
-    //PRINT DONE BOARD
-    public void printDoneBoard() {
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                System.out.print(gameDoneBoard[i][j]);
-            }
-            System.out.println();
-        }
-        System.out.println();
-    }
-
-
     //GENERATE BACK BOARD
     public void generateBackBoard() {
         generateClearBackBoard();
-        //printBackBoard();
         placeBackBoardMines();
-        //printBackBoard();
         addInitialValues();
-        //printMinePositions();
-        //printBackBoard();
     }
 
 
@@ -148,12 +124,9 @@ public class Board {
                             System.out.print(" " + value + " ");
                             zero = false;
                         }
-
                     }
                     System.out.println();
                 }
-
-
             }
         }
         System.out.println();
@@ -185,7 +158,7 @@ public class Board {
             this.minePositions = new int[2][mineAmount];
             allowed = true;
             for (int i = 0; i < mineAmount; i++) {
-                int mine = (int) mines.get(i);
+                int mine = mines.get(i);
 
                 int mineRow = (int) Math.floor(mine / width);
                 int mineColumn = mine % width;
@@ -206,7 +179,7 @@ public class Board {
         this.minePositions = new int[2][mineAmount];
 
         for (int i = 0; i < mineAmount; i++) {
-            int mine = (int) mines.get(i);
+            int mine = mines.get(i);
 
             int mineRow = (int) Math.floor(mine / width);
             int mineColumn = mine % width;
@@ -216,44 +189,6 @@ public class Board {
 
             gameBackBoard[mineRow][mineColumn] = mineSymbol;
         }
-    }
-
-
-    //PRINT MINE POSITIONS
-    public void printMinePositions() {
-        for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < mineAmount; j++) {
-                System.out.print(minePositions[i][j]);
-            }
-            System.out.print(" |" + (i+1));
-            System.out.println();
-
-            if (i == height - 1) {
-                for (int j = 0; j < width; j++) {
-                    System.out.print("___");
-                }
-                System.out.println();
-
-                int widthPrintRows = String.valueOf(width).length();
-                for (int k = 0; k < widthPrintRows; k++) {
-                    boolean zero = true;
-                    for (int j = 0; j < width; j++) {
-                        int value = (int) (Math.floor((j + 1)/(Math.pow(10,(widthPrintRows-k-1)))) % 10);
-                        if (value == 0 && zero) {
-                            System.out.print("   ");
-                        } else {
-                            System.out.print(" " + value + " ");
-                            zero = false;
-                        }
-
-                    }
-                    System.out.println();
-                }
-
-
-            }
-        }
-        System.out.println();
     }
 
 
@@ -277,9 +212,7 @@ public class Board {
                         }
                     }
 
-                    String colouredSetTileValue = Integer.toString(setTileValue);
-
-                    colouredSetTileValue = switch (setTileValue) {
+                    String colouredSetTileValue = switch (setTileValue) {
                         case 0 -> clearSymbol;
                         case 1 -> oneSymbol;
                         case 2 -> twoSymbol;
@@ -292,8 +225,6 @@ public class Board {
                         default -> "e";
                     };
 
-
-
                     gameBackBoard[tileRow][tileColumn] = colouredSetTileValue;
                 }
             }
@@ -304,7 +235,6 @@ public class Board {
     //GENERATE FRONT BOARD
     public void generateFrontBoard() {
         generateClearFrontBoard();
-        //printDoneBoard();
     }
 
 
@@ -358,12 +288,9 @@ public class Board {
                             System.out.print(" " + value + " ");
                             zero = false;
                         }
-
                     }
                     System.out.println();
                 }
-
-
             }
         }
         System.out.println();
@@ -419,6 +346,8 @@ public class Board {
 
     }
 
+
+    //FLAG TILE
     public void flagTile(int selectedRow, int selectedColumn) {
         String tileValue = gameFrontBoard[selectedRow][selectedColumn];
 
@@ -429,7 +358,6 @@ public class Board {
         if (tileValue.equals(flagSymbol)) {
             this.gameFrontBoard[selectedRow][selectedColumn] = hiddenSymbol;
         }
-
     }
 
 
